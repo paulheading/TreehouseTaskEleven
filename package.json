@@ -11,14 +11,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "basic-auth": "^2.0.1",
+    "email-verifier": "^0.4.1",
+    "legit": "^1.0.7",
+    "nodemon": "^1.18.3",
+    "sequelize-cli": "^5.5.1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cross-env": "^5.2.0",
     "express": "^4.16.3",
+    "express-validator": "^6.4.1",
     "morgan": "^1.9.0",
     "promise.prototype.finally": "^3.1.0",
+    "save-dev": "0.0.1-security",
+    "sequelize": "^5.21.6",
     "sqlite3": "^4.0.2"
   }
 }
