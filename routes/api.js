@@ -87,7 +87,7 @@ const authenticateUser = asyncHandler(async (req, res, next) => {
     console.warn(message);
 
     // keep messaging vague
-    res.status(401).json({ message : 'Access Denied' });
+    res.status(400).json({ message : 'Access Denied' });
     
   } else {
 
@@ -104,7 +104,6 @@ const isEmailValid = asyncHandler(async (req, res, next) => {
     // search for result against the legit regex
     const response = await legit(req.body.emailAddress);
 
-    
     if (response.isValid) {
 
       // if the response is valid, go ahead
@@ -113,13 +112,13 @@ const isEmailValid = asyncHandler(async (req, res, next) => {
     } else {
 
       // if the response isn't valid, send a bad status/message  
-      res.status(401).json({ message : "Email address doesn't check out" });
+      res.status(400).json({ message : "Email address doesn't check out" });
 
     }
 
-  } catch (e) {
+  } catch (error) {
 
-    res.status(401).json({ message : 'Big Error' });
+    res.status(400).json(error);
 
   }
 
@@ -162,8 +161,11 @@ router.get('/users', authenticateUser,
 
   // returns the currently authenticated user
   res.status(200).json({
+    id : user.id,
+    firstName : user.firstName,
+    lastName : user.lastName,
     emailAddress : user.emailAddress
-  });  
+  });
 
 }));
 
@@ -197,7 +199,7 @@ router.post('/users', firstNameCheck,
       await User.create(user);
 
       // return a successful status
-      return res.status(201).redirect("/");
+      res.header('Location','/').sendStatus(201);
   
     } catch (error) {
   
