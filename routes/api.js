@@ -198,7 +198,7 @@ router.post('/users', firstNameCheck,
 
       await User.create(user);
 
-      // return a successful status
+      // return no content
       res.header('Location','/').sendStatus(201);
   
     } catch (error) {
@@ -320,8 +320,10 @@ router.post('/courses', authenticateUser,
       // create database record
       await Course.create(req.body);
 
-      // return a successful status
-      res.sendStatus(201);
+      let redirect = `/courses/${req.body.userId}`;
+
+      // returns no content
+      res.header('Location',redirect).sendStatus(201);
       
     } catch (error) {
 
