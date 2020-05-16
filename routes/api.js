@@ -320,10 +320,35 @@ router.post('/courses', authenticateUser,
       // create database record
       await Course.create(req.body);
 
-      let redirect = `/courses/${req.body.userId}`;
+      try {
 
-      // returns no content
-      res.header('Location',redirect).sendStatus(201);
+        let match = {};
+
+        match.find = await Course.findAll({
+          // only 1 result please
+          limit : 1,
+          // base search on mulitple criteria
+          where : {
+            "title" : req.body.title,
+            "description" : req.body.description,
+            "userId" : req.body.userId
+          },
+          // just the id please
+          attributes : 
+          [ "id"]
+        });
+
+        // create that redirect  
+        match.print = `/courses/${match.find[0].id}`;
+  
+        // returns redirect + no content
+        res.header('Location',match.print).sendStatus(204);
+        
+      } catch (error) {
+
+        throw error;
+        
+      }
       
     } catch (error) {
 
