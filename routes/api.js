@@ -342,7 +342,7 @@ router.post('/courses', authenticateUser,
         match.print = `/courses/${match.find[0].id}`;
   
         // returns redirect + no content
-        res.header('Location',match.print).sendStatus(204);
+        res.header('Location',match.print).sendStatus(201);
         
       } catch (error) {
 
